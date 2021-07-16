@@ -1,20 +1,29 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useInjectReducer } from 'redux-injectors';
+
+import reducer from './store/reducer';
+import { getTodos } from './store/selectors';
+import { addTask, removeTask, setTasks } from './store/actions';
+
 import './styles.css';
 
 const STORAGE_KEY = "rwb/todos";
 
 const TodoList = () => {
-  const [todos, setTodos] = useState([]);
+  useInjectReducer({ key: 'todoList', reducer });
+  const todos = useSelector(getTodos());
+  const dispatch = useDispatch();
   const inputRef = useRef(null);
 
   function readSavedLists() {
     const rawSavedLists = localStorage.getItem(STORAGE_KEY);
 
     if (rawSavedLists) {
-      const savedLists = JSON.parse(rawSavedLists)
+      const savedLists = JSON.parse(rawSavedLists);
 
       if (Array.isArray(savedLists)) {
-        setTodos(savedLists);
+        dispatch(setTasks(savedLists));
       }
     }
   }
@@ -33,36 +42,36 @@ const TodoList = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
   }, [todos]);
 
-  const saveTask = () => {
+  const handleAddTask = () => {
     const inputValue = inputRef.current.value;
     const isValidTask = inputValue.replace(/\s/g, '').length > 0;
 
     if (isValidTask) {
-      setTodos(todos => [{ id: Math.random(), task: inputValue }, ...todos]);
+      dispatch(addTask({ id: Math.random(), task: inputValue }));
     }
   };
 
-  const removeTask = (taskId) => () => {
-    setTodos(todos => todos.filter(todo => todo.id !== taskId));
+  const handleRemoveTask = (taskId) => () => {
+    dispatch(removeTask(taskId));
   };
 
   const handleTaskInputKey = e => {
     if (e.key === 'Enter') {
-      saveTask();
+      handleAddTask();
     }
   }
 
   return (
     <div className="container">
-      <h3 className="task-header">Basic React To-do list</h3>
+      <h3 className="task-header">Basic React To-do list with Redux</h3>
       <input className="task-input" ref={inputRef} onKeyDown={handleTaskInputKey} placeholder="Enter your tasks!" type="text" />
-      <button className="save-btn" onClick={saveTask} type="button">SAVE</button>
+      <button className="save-btn" onClick={handleAddTask} type="button">ADD</button>
 
       <ul className="tasks-list">
-        {todos.map(todo => (
+        {todos?.map(todo => (
           <li key={todo.id} className="task">
             <span>{todo.task}</span>
-            <span className="clear-task" onClick={removeTask(todo.id)}>X</span>
+            <span className="remove-task" onClick={handleRemoveTask(todo.id)} title="Remove Task">X</span>
           </li>
         ))}
       </ul>
