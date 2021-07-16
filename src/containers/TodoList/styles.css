@@ -1,0 +1,49 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 50px 20%;
+}
+
+.task-header {
+  text-align: center;
+}
+
+.task-input {
+  border: none;
+  border: 2px solid var(--light-grey);
+  border-radius: 5px;
+  color: var(--text-grey);
+  font-weight: 500;
+  margin: 25px 0px 10px;
+  outline: none;
+  padding: 10px 15px;
+  transition: border 0.25s ease-in-out;
+  width: 250px;
+}
+
+.task-input:focus {
+  border: 2px solid var(--primary);
+}
+
+.save-btn {
+  padding: 5px 20px;
+}
+
+.tasks-list {
+  margin-top: 25px;
+  list-style-type: none;
+  width: 100%;
+}
+
+.task {
+  background-color: var(--light-grey);
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.clear-task {
+  float: right;
+}

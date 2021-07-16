@@ -1,3 +1,10 @@
+:root {
+  --background: #fafafa;
+  --primary: #0c78fb;
+  --text-grey: #606060;
+  --light-grey: lightgrey;
+}
+
 * {
   box-sizing: border-box;
   margin: 0px;
@@ -5,6 +12,5 @@
 }
 
 body {
-  background-color: bisque;
-  height: 100vh;
+  background-color: var(--background);
 }

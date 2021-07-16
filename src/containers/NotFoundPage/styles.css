@@ -1,0 +1,15 @@
+.wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.status-wrapper {
+  text-align: center;
+}
+
+.status-code {
+  font-weight: 600;
+}
