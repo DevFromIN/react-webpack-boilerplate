@@ -15,6 +15,8 @@ if (IS_PROD) {
 }
 
 module.exports = {
+  entry: ['./src/app'],
+
   mode,
 
   output: {
@@ -25,7 +27,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/i,
+        test: /\.(js|jsx)$/i,
         exclude: /node_modules/,
         use: 'babel-loader',
       },
@@ -54,6 +56,10 @@ module.exports = {
       template: './src/index.html',
     }),
   ],
+
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 
   devtool,
 
