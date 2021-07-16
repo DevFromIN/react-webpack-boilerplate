@@ -1,3 +1,7 @@
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const IS_PROD = process.env.NODE_ENV === 'production';
 
 let devtool = 'eval-source-map';
@@ -13,15 +17,43 @@ if (IS_PROD) {
 module.exports = {
   mode,
 
+  output: {
+    path: path.resolve(__dirname, 'build'),
+    assetModuleFilename: 'static/[hash][ext][query]',
+  },
+
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.js$/i,
         exclude: /node_modules/,
         use: 'babel-loader',
       },
+
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+      },
+
+      {
+        test: /\.(png|jpe?g|svg|gif)$/i,
+        type: 'asset',
+      },
+
+      {
+        test: /\.html$/i,
+        use: 'html-loader',
+      },
     ],
   },
+
+  plugins: [
+    new MiniCssExtractPlugin(),
+
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+  ],
 
   devtool,
 
