@@ -7,8 +7,8 @@ import { getTodos } from './store/selectors';
 import { addTask, removeTask, setTasks } from './store/actions';
 
 import './styles.css';
-
-const STORAGE_KEY = "rwb/todos";
+import storageKeys from './constants/storage-keys.json';
+import defaultTasks from './constants/default-tasks.json';
 
 const TodoList = () => {
   useInjectReducer({ key: 'todoList', reducer });
@@ -16,16 +16,21 @@ const TodoList = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
-  function readSavedLists() {
-    const rawSavedLists = localStorage.getItem(STORAGE_KEY);
+  function readSavedTasks() {
+    const rawSavedTasks = localStorage.getItem(storageKeys.todos);
+    const tasks = [];
 
-    if (rawSavedLists) {
-      const savedLists = JSON.parse(rawSavedLists);
+    if (rawSavedTasks) {
+      const savedTasks = JSON.parse(rawSavedTasks);
 
-      if (Array.isArray(savedLists)) {
-        dispatch(setTasks(savedLists));
+      if (Array.isArray(savedTasks)) {
+        tasks.push(...savedTasks)
       }
+    } else {  
+      tasks.push(...defaultTasks);
     }
+    
+    dispatch(setTasks(tasks));
   }
 
   function resetTaskInput() {
@@ -34,12 +39,12 @@ const TodoList = () => {
   }
 
   useEffect(() => {
-    readSavedLists();
+    readSavedTasks();
   }, []);
 
   useEffect(() => {
     resetTaskInput();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+    localStorage.setItem(storageKeys.todos, JSON.stringify(todos));
   }, [todos]);
 
   const handleAddTask = () => {
