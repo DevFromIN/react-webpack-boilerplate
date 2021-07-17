@@ -2,8 +2,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  padding: 50px 20%;
+  padding: 50px 0px;
 }
 
 .task-header {
@@ -32,7 +31,7 @@
 }
 
 .tasks-list {
-  margin-top: 25px;
+  margin-top: 50px;
   list-style-type: none;
   width: 100%;
 }

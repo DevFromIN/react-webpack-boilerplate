@@ -14,4 +14,7 @@
 
 body {
   background-color: var(--background);
+  margin: auto;
+  max-width: 1000px;
+  padding: 0px 5%;
 }

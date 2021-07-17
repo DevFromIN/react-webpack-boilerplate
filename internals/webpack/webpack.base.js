@@ -1,17 +1,19 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+const IS_PROD = process.env.NODE_ENV === 'production';
 
 module.exports = configs => ({
   mode: configs.mode,
-  entry: configs.entry,
+  entry: path.join(process.cwd(), 'src/app'),
+
   output: {
+    clean: true,
     path: path.resolve(process.cwd(), 'build'),
     publicPath: '/',
-    assetModuleFilename: 'static/[hash][ext][query]',
     ...configs.output,
   },
-  optimization: configs.optimization,
+
   module: {
     rules: [
       {
@@ -21,23 +23,12 @@ module.exports = configs => ({
       },
 
       {
-        // Preprocess our own .css files
-        // This is the place to add your own loaders (e.g. sass/less etc.)
-        // for a list of loaders, see https://webpack.js.org/loaders/#styling
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset',
       },
 
       {
-        // Preprocess 3rd party .css files located in node_modules
-        test: /\.css$/,
-        include: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-      },
-
-      {
-        test: /\.(png|jpe?g|svg|gif)$/i,
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset',
       },
 
@@ -45,27 +36,39 @@ module.exports = configs => ({
         test: /\.html$/,
         use: 'html-loader',
       },
+
+      {
+        // Preprocess our own .css files
+        // This is the place to add your own loaders (e.g. sass/less etc.)
+        // for a list of loaders, see https://webpack.js.org/loaders/#styling
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          IS_PROD ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader',
+          'postcss-loader',
+        ],
+      },
+
+      {
+        // Preprocess 3rd party .css files located in node_modules
+        test: /\.css$/,
+        include: /node_modules/,
+        use: [
+          IS_PROD ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader',
+        ],
+      },
     ],
   },
-
-  plugins: [
-    new MiniCssExtractPlugin(),
-    new CleanWebpackPlugin(),
-    ...configs.plugins,
-  ],
 
   resolve: {
     extensions: ['.js', '.jsx'],
   },
 
-  performance: configs.performance || {},
-
+  optimization: configs.optimization,
+  plugins: configs.plugins,
+  devServer: configs.devServer,
   devtool: configs.devtool,
-
-  devServer: {
-    port: 3000,
-    hot: true,
-    host: '0.0.0.0',
-    historyApiFallback: true,
-  },
+  performance: configs.performance || {},
 });
