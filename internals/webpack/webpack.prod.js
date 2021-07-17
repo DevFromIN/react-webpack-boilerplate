@@ -1,12 +1,11 @@
-// you can use devtool="source-map" for production builds with high quality SourceMaps.
-// Learn more at https://webpack.js.org/configuration/devtool/#devtool
-
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = require('./webpack.base')({
   mode: 'production',
@@ -77,6 +76,13 @@ module.exports = require('./webpack.base')({
       ignoreOrder: false,
     }),
 
+    new CompressionPlugin({
+      algorithm: 'gzip',
+      test: /\.(js|css|html)$/,
+      threshold: 10240,
+      minRatio: 0.8,
+    }),
+
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
       template: 'src/index.html',
@@ -99,17 +105,43 @@ module.exports = require('./webpack.base')({
       inject: true,
     }),
 
-    new CompressionPlugin({
-      algorithm: 'gzip',
-      test: /\.(js|css|html)$/,
-      threshold: 10240,
-      minRatio: 0.8,
-    }),
-
     new webpack.ids.HashedModuleIdsPlugin({
       hashFunction: 'sha256',
       hashDigest: 'hex',
       hashDigestLength: 20,
+    }),
+
+    new WebpackPwaManifest({
+      name: 'React Webpack Boilerplate',
+      short_name: 'Boilerplate',
+      description: 'Updated boilerplate code with React v17 and Webpack v5',
+      background_color: '#ffffff',
+      display: 'standalone',
+      inject: true,
+      orientation: 'portrait',
+      start_url: '.',
+      theme_color: '#000000',
+      // crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
+      icons: [
+        {
+          src: path.resolve(process.cwd(), 'src/images/icon.png'),
+          sizes: [96, 128, 192, 256, 384, 512], // multiple sizes
+        },
+        {
+          src: path.resolve(process.cwd(), 'src/images/icon.png'),
+          size: '1024x1024',
+          purpose: 'maskable',
+        },
+      ],
+    }),
+
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
+      cleanupOutdatedCaches: true,
+      mode: 'production',
     }),
   ],
 

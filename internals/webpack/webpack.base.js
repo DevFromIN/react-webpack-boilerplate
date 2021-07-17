@@ -5,7 +5,7 @@ const IS_PROD = process.env.NODE_ENV === 'production';
 
 module.exports = configs => ({
   mode: configs.mode,
-  entry: path.join(process.cwd(), 'src/app'),
+  entry: path.join(process.cwd(), 'src/index'),
 
   output: {
     clean: true,
@@ -63,7 +63,9 @@ module.exports = configs => ({
   },
 
   resolve: {
+    modules: ['node_modules', 'src'],
     extensions: ['.js', '.jsx'],
+    mainFields: ['browser', 'jsnext:main', 'main'],
   },
 
   optimization: configs.optimization,
@@ -71,4 +73,5 @@ module.exports = configs => ({
   devServer: configs.devServer,
   devtool: configs.devtool,
   performance: configs.performance || {},
+  target: 'web', // Make web variables accessible to webpack, e.g. window
 });
