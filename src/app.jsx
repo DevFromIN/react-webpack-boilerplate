@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -10,11 +10,11 @@ const INITIAL_STATE = {};
 
 const store = configureStore(INITIAL_STATE);
 
-ReactDOM.render(
+render(
   <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Provider>
-  ,MOUNT_NODE
+  </Provider>,
+  MOUNT_NODE
 );

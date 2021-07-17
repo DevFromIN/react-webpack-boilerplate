@@ -44,6 +44,10 @@
   margin-bottom: 10px;
 }
 
+.task:nth-child(even) {
+  background-color: var(--extra-light-grey);
+}
+
 .remove-task {
   float: right;
 }
