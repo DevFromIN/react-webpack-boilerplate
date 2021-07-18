@@ -27,7 +27,7 @@ render(
 // unregisterSW() to registerSW() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 
-serviceWorker.registerSW();
+serviceWorker.unregisterSW();
 
 // Also if you want to disable permanently, then you should probably need to
 // * remove both Workbox plugin and ManifestPwa from internals/webpack/webpack.prod.js
