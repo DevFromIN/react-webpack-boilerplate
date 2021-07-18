@@ -1,6 +1,7 @@
 [
-  { "id": "t1", "task": "React Refresh support" },
+  { "id": "t1", "task": "React Fast Refresh support" },
   { "id": "t2", "task": "React v17 with Webpack v5 and Babel v7" },
-  { "id": "t3", "task": "Supports new JSX transformation" },
-  { "id": "t4", "task": "Lazy loading, Redux Injectors and much more." }
+  { "id": "t3", "task": "Works Offline" },
+  { "id": "t4", "task": "Supports new JSX transformation" },
+  { "id": "t5", "task": "Lazy loading, Redux Injectors and much more." }
 ]

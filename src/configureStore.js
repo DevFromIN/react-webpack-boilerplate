@@ -21,7 +21,7 @@ const configureStore = (initialState = {}) => {
   const store = createStore(
     createReducer(),
     initialState,
-    composeEnhancers(...enhancers)
+    composeEnhancers(...enhancers),
   );
 
   return store;

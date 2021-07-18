@@ -1,9 +1,9 @@
 const IS_PROD = process.env.NODE_ENV === 'production';
 
-const plugins = [];
+const plugins = ['@babel/plugin-transform-runtime'];
 
 if (!IS_PROD) {
-  plugins.push('react-refresh/babel');
+  plugins.unshift('react-refresh/babel');
 }
 
 module.exports = {
