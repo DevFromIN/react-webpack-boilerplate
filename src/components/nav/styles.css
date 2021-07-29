@@ -9,5 +9,7 @@ header {
 }
 
 .header-title {
+  text-decoration-line: none;
+  color: var(--dark);
   letter-spacing: 0.5px;
 }

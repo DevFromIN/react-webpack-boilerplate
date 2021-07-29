@@ -124,11 +124,11 @@ module.exports = require('./webpack.base')({
       // crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
       icons: [
         {
-          src: path.resolve(process.cwd(), 'src/images/icon.png'),
+          src: path.resolve(process.cwd(), 'src/static/icons/icon.png'),
           sizes: [96, 128, 192, 256, 384, 512], // multiple sizes
         },
         {
-          src: path.resolve(process.cwd(), 'src/images/icon.png'),
+          src: path.resolve(process.cwd(), 'src/static/icons/icon.png'),
           size: '1024x1024',
           purpose: 'maskable',
         },
