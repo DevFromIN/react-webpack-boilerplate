@@ -39,6 +39,7 @@
 .task {
   background-color: var(--light-grey);
   border-radius: 5px;
+  font-weight: 600;
   padding: 20px;
   margin-bottom: 10px;
 }

@@ -1,9 +1,16 @@
+@font-face {
+  font-family: Quicksand;
+  font-weight: 300 700;
+  src: url('./static/fonts/Quicksand/Quicksand-VariableFont_wght.ttf');
+}
+
 :root {
   --background: #fafafa;
+  --dark: #000000;
+  --extra-light-grey: #eeeeee;
+  --light-grey: lightgrey;
   --primary: #0c78fb;
   --text-grey: #606060;
-  --light-grey: lightgrey;
-  --extra-light-grey: #eeeeee;
 }
 
 * {
@@ -17,4 +24,8 @@ body {
   margin: auto;
   max-width: 1000px;
   padding: 0px 5%;
+}
+
+body.fontLoaded {
+  font-family: 'Quicksand', sans-serif;
 }
