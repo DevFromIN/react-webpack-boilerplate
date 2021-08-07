@@ -3,9 +3,9 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import FontFaceObserver from 'fontfaceobserver';
 import '../../index.css';
 
+import Header from 'components/nav/Header';
 import NotFoundPage from '../NotFoundPage';
 import TodoList from '../TodoList/Loadable';
-import Header from '../../components/nav/Header';
 
 const App = () => {
   useEffect(() => {

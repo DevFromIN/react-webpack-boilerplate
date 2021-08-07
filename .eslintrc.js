@@ -5,7 +5,13 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
+    'prettier',
+    'eslint:recommended',
+    'plugin:import/recommended',
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -27,5 +33,13 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/require-default-props': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+  },
+
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: './internals/webpack/webpack.prod.js',
+      },
+    },
   },
 };
